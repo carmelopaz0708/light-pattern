@@ -1,0 +1,7 @@
+{
+    "board": "arduino:avr:uno",
+    "port": "COM5",
+    "programmer": "arduino:avrispmkii",
+    "sketch": "light-pattern.ino",
+    "output": "C:/Users/Siege Paz/Developer/arduino_build"
+}
