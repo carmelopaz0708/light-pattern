@@ -1,10 +1,7 @@
 /*
-SEQUENCER
+LIGHT PATTERN
 
-Controls the behavior of an array of LEDs using tactile switches and save states.
-
-version: 1.0.0
-author:  carmelopaz0708@gmail.com
+carmelopaz0708@gmail.com
  */
 
 const int TACTILE = 2;
