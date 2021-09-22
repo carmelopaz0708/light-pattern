@@ -73,7 +73,23 @@ void all() {
 
 void loop() 
 {
-	// TODO: Revise loop function. Use switch case
+	// TODO: Revise loop function. Use switch case or nested if loop. Or use an array and switch case with a variable
+
+	if (digitalRead(sw_all) == HIGH) {
+		// Enter debounce then all function
+		
+		currentState = debounce(lastState);
+		
+
+	} else if (digitalRead(sw_decrement) == HIGH) {
+		// Enter debounce then decrement function
+	} else if (digitalRead(sw_increment) == HIGH) {
+		// Enter debounce then increment function
+	} else if (digitalRead(sw_random) == HIGH) {
+		// Enter debounce then decrement function
+	}
+
+	
 
 	currentState = debounce(lastState);
 	if (lastState == LOW && currentState == HIGH)
