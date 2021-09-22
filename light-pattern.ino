@@ -27,6 +27,10 @@ bool lastState = LOW;
 bool currentState = LOW;
 bool ledOn = false;
 
+// Global constants
+#define LED_STARTCOUNT 2
+#define LED_ENDCOUNT 11
+
 void setup() 
 {
 	pinMode(sw_all, INPUT);
@@ -67,20 +71,24 @@ void randomizer() {
 	// TODO
 }
 
-void all() {
-	// TODO
+void all(bool currentState) {
+	if (lastState == LOW && currentState == HIGH) {
+		ledOn = !ledOn;
+	}
+	delay(10);
+	lastState = currentState;
+
+	for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++) {
+		digitalWrite(i, ledOn);
+	}
 }
 
 void loop() 
 {
 	// TODO: Revise loop function. Use switch case or nested if loop. Or use an array and switch case with a variable
-
 	if (digitalRead(sw_all) == HIGH) {
-		// Enter debounce then all function
-		
 		currentState = debounce(lastState);
-		
-
+		all(currentState);
 	} else if (digitalRead(sw_decrement) == HIGH) {
 		// Enter debounce then decrement function
 	} else if (digitalRead(sw_increment) == HIGH) {
@@ -88,15 +96,4 @@ void loop()
 	} else if (digitalRead(sw_random) == HIGH) {
 		// Enter debounce then decrement function
 	}
-
-	
-
-	currentState = debounce(lastState);
-	if (lastState == LOW && currentState == HIGH)
-	{
-		ledOn = !ledOn;
-	}
-	delay(10);				// Removes flickering
-	lastState = currentState;
-	digitalWrite(led1, ledOn);
 }
