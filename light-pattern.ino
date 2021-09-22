@@ -40,7 +40,7 @@ void setup()
 	pinMode(A3, INPUT);
 }
 
-bool switchDebounce(int swPos)
+bool debounce(int swPos)
 {
 	bool switchCurrentState = digitalRead(swPos);
 	if (switchLastState != switchCurrentState) 
@@ -84,7 +84,7 @@ void loop()
 {
 	if (digitalRead(sw_triggerAll) == HIGH) 
 	{
-		switchCurrentState = switchDebounce(sw_triggerAll);
+		switchCurrentState = debounce(sw_triggerAll);
 		all();
 	}
 	
