@@ -60,12 +60,12 @@ $EndComp
 $Comp
 L power:VCC #PWR?
 U 1 1 614C4F7D
-P 3450 2550
-F 0 "#PWR?" H 3450 2400 50  0001 C CNN
-F 1 "VCC" H 3465 2723 50  0000 C CNN
-F 2 "" H 3450 2550 50  0001 C CNN
-F 3 "" H 3450 2550 50  0001 C CNN
-	1    3450 2550
+P 3450 3100
+F 0 "#PWR?" H 3450 2950 50  0001 C CNN
+F 1 "VCC" H 3465 3273 50  0000 C CNN
+F 2 "" H 3450 3100 50  0001 C CNN
+F 3 "" H 3450 3100 50  0001 C CNN
+	1    3450 3100
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -460,19 +460,6 @@ Wire Wire Line
 Connection ~ 3250 5500
 Wire Wire Line
 	3250 5500 3250 5650
-$Comp
-L Switch:SW_Push POWER
-U 1 1 61514A08
-P 3450 2900
-F 0 "POWER" H 3600 2800 50  0000 R CNN
-F 1 "SW_Push" H 3450 3094 50  0001 C CNN
-F 2 "" H 3450 3100 50  0001 C CNN
-F 3 "~" H 3450 3100 50  0001 C CNN
-	1    3450 2900
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	3450 2550 3450 2700
 Wire Wire Line
 	3450 3200 3450 3100
 Wire Wire Line
@@ -507,10 +494,10 @@ $EndComp
 Wire Wire Line
 	4500 4300 4500 4150
 $Comp
-L Switch:SW_Push sw_incr
+L Switch:SW_Push sw_triggerUp
 U 1 1 61532EBA
 P 4950 3550
-F 0 "sw_incr" H 4950 3500 50  0000 C CNN
+F 0 "sw_triggerUp" H 4950 3500 50  0000 C CNN
 F 1 "SW_Push" H 4950 3744 50  0001 C CNN
 F 2 "" H 4950 3750 50  0001 C CNN
 F 3 "~" H 4950 3750 50  0001 C CNN
@@ -542,10 +529,10 @@ $EndComp
 Wire Wire Line
 	4500 3750 4500 3850
 $Comp
-L Switch:SW_Push sw_decr
+L Switch:SW_Push sw_triggerDown
 U 1 1 61533F79
 P 5400 3550
-F 0 "sw_decr" H 5400 3500 50  0000 C CNN
+F 0 "sw_triggerDown" H 5400 3500 50  0000 C CNN
 F 1 "SW_Push" H 5400 3744 50  0001 C CNN
 F 2 "" H 5400 3750 50  0001 C CNN
 F 3 "~" H 5400 3750 50  0001 C CNN
@@ -575,10 +562,10 @@ F 3 "" H 5400 4300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_Push sw_rand
+L Switch:SW_Push sw_triggerRandom
 U 1 1 615362EE
 P 5850 3550
-F 0 "sw_rand" H 5850 3500 50  0000 C CNN
+F 0 "sw_triggerRandom" H 5850 3500 50  0000 C CNN
 F 1 "SW_Push" H 5850 3744 50  0001 C CNN
 F 2 "" H 5850 3750 50  0001 C CNN
 F 3 "~" H 5850 3750 50  0001 C CNN
@@ -677,10 +664,10 @@ Connection ~ 5850 3850
 Wire Wire Line
 	5850 3850 5850 3950
 $Comp
-L Switch:SW_Push sw_all
+L Switch:SW_Push sw_triggerAll
 U 1 1 614AAAD7
 P 4500 3550
-F 0 "sw_all" H 4500 3500 50  0000 C CNN
+F 0 "sw_triggerAll" H 4500 3500 50  0000 C CNN
 F 1 "SW_Push" H 4500 3744 50  0001 C CNN
 F 2 "" H 4500 3750 50  0001 C CNN
 F 3 "~" H 4500 3750 50  0001 C CNN
