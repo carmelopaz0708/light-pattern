@@ -33,10 +33,10 @@ bool ledOn = false;
 
 void setup() 
 {
-	pinMode(sw_all, INPUT);
-	pinMode(sw_decrement, INPUT);
-	pinMode(sw_increment, INPUT);
-	pinMode(sw_random, INPUT);
+	pinMode(A0, INPUT);
+	pinMode(A1, INPUT);
+	pinMode(A2, INPUT);
+	pinMode(A3, INPUT);
 	pinMode(led1, OUTPUT);
 	pinMode(led2, OUTPUT);
 	pinMode(led3, OUTPUT);
