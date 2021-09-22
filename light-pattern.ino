@@ -51,12 +51,10 @@ bool switchDebounce(int swPos)
 	return switchCurrentState;
 }
 
-void all(bool current) 
+void all() 
 {
 	static bool ledOn = false;
-
-	switchCurrentState = current;
-	if (switchLastState == LOW && switchCurrentState == HIGH) 
+	if (switchLastState == LOW && switchCurrentState == HIGH)		// Condition that triggers event
 	{
 		ledOn = !ledOn;
 		for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++) 
@@ -84,11 +82,10 @@ void randomizer()
 
 void loop() 
 {
-	// TODO: Revise loop function. Use switch case or nested if loop. Or use an array and switch case with a variable
 	if (digitalRead(sw_triggerAll) == HIGH) 
 	{
-		bool trigger = switchDebounce(sw_triggerAll);
-		all(trigger);
+		switchCurrentState = switchDebounce(sw_triggerAll);
+		all();
 	}
 	
 	// else if (digitalRead(sw_decrement) == HIGH) {
