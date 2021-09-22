@@ -7,11 +7,6 @@
 
 // TODO: Include library headers like random.h
 
-// Pin assignment
-const int sw_all = A0;
-const int sw_decrement = A1;
-const int sw_increment = A2;
-const int sw_random = A3;
 const int led1 = 2;
 const int led2 = 3;
 const int led3 = 4;
@@ -22,78 +17,85 @@ const int led7 = 8;
 const int led8 = 9;
 const int led9 = 10;
 
-// Global variables
-bool lastState = LOW;
-bool currentState = LOW;
-bool ledOn = false;
+const int sw_triggerAll = A0;
+const int sw_triggerUp = A1;
+const int sw_triggerDown = A2;
+const int sw_triggerRandom = A3;
 
-// Global constants
+bool switchLastState = LOW;
+bool switchCurrentState = LOW;
+
 #define LED_STARTCOUNT 2
 #define LED_ENDCOUNT 11
 
 void setup() 
 {
+	for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++)
+	{
+		pinMode(i, OUTPUT);
+	}
 	pinMode(A0, INPUT);
 	pinMode(A1, INPUT);
 	pinMode(A2, INPUT);
 	pinMode(A3, INPUT);
-	pinMode(led1, OUTPUT);
-	pinMode(led2, OUTPUT);
-	pinMode(led3, OUTPUT);
-	pinMode(led4, OUTPUT);
-	pinMode(led5, OUTPUT);
-	pinMode(led6, OUTPUT);
-	pinMode(led7, OUTPUT);
-	pinMode(led8, OUTPUT);
-	pinMode(led9, OUTPUT);
 }
 
-bool debounce(bool last) 
+bool switchDebounce(int swPos)
 {
-	bool current = digitalRead(sw_all);
-	if (last != current) 
+	bool switchCurrentState = digitalRead(swPos);
+	if (switchLastState != switchCurrentState) 
 	{
 		delay(50);
-		current = digitalRead(sw_all);
+		switchCurrentState = digitalRead(swPos);
 	}
-	return current;
+	return switchCurrentState;
 }
 
-void decrement() {
-	// TODO
-}
+void all(bool current) 
+{
+	static bool ledOn = false;
 
-void increment() {
-	// TODO
-}
-
-void randomizer() {
-	// TODO
-}
-
-void all(bool currentState) {
-	if (lastState == LOW && currentState == HIGH) {
+	switchCurrentState = current;
+	if (switchLastState == LOW && switchCurrentState == HIGH) 
+	{
 		ledOn = !ledOn;
+		for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++) 
+		{
+			digitalWrite(i, ledOn);
+		}
 	}
-	delay(10);
-	lastState = currentState;
+	delay(100);
+}
 
-	for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++) {
-		digitalWrite(i, ledOn);
-	}
+void decrement() 
+{
+	// TODO
+}
+
+void increment() 
+{
+	// TODO
+}
+
+void randomizer() 
+{
+	// TODO
 }
 
 void loop() 
 {
 	// TODO: Revise loop function. Use switch case or nested if loop. Or use an array and switch case with a variable
-	if (digitalRead(sw_all) == HIGH) {
-		currentState = debounce(lastState);
-		all(currentState);
-	} else if (digitalRead(sw_decrement) == HIGH) {
-		// Enter debounce then decrement function
-	} else if (digitalRead(sw_increment) == HIGH) {
-		// Enter debounce then increment function
-	} else if (digitalRead(sw_random) == HIGH) {
-		// Enter debounce then decrement function
+	if (digitalRead(sw_triggerAll) == HIGH) 
+	{
+		bool trigger = switchDebounce(sw_triggerAll);
+		all(trigger);
 	}
+	
+	// else if (digitalRead(sw_decrement) == HIGH) {
+	// 	// Enter debounce then decrement function
+	// } else if (digitalRead(sw_increment) == HIGH) {
+	// 	// Enter debounce then increment function
+	// } else if (digitalRead(sw_random) == HIGH) {
+	// 	// Enter debounce then decrement function
+	// }
 }
