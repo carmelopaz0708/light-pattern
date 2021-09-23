@@ -25,12 +25,9 @@ const int sw_triggerRandom = A3;
 bool switchLastState = LOW;
 bool switchCurrentState = LOW;
 
-#define LED_STARTCOUNT 2
-#define LED_ENDCOUNT 11
-
 void setup() 
 {
-	for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++)
+	for (int i = 2; i < 10; i++)
 	{
 		pinMode(i, OUTPUT);
 	}
@@ -57,12 +54,11 @@ void all()
 	if (switchLastState == LOW && switchCurrentState == HIGH)		// Condition that triggers event
 	{
 		ledOn = !ledOn;
-		for (int i = LED_STARTCOUNT; i < LED_ENDCOUNT; i++) 
+		for (int i = 2; i < 10; i++) 
 		{
 			digitalWrite(i, ledOn);
 		}
 	}
-	delay(100);
 }
 
 void decrement() 
@@ -87,12 +83,4 @@ void loop()
 		switchCurrentState = debounce(sw_triggerAll);
 		all();
 	}
-	
-	// else if (digitalRead(sw_decrement) == HIGH) {
-	// 	// Enter debounce then decrement function
-	// } else if (digitalRead(sw_increment) == HIGH) {
-	// 	// Enter debounce then increment function
-	// } else if (digitalRead(sw_random) == HIGH) {
-	// 	// Enter debounce then decrement function
-	// }
 }
