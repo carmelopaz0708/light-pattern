@@ -1,10 +1,3 @@
-/*
-  LIGHT PATTERN
-
-  Displays a pattern of lights based on switch input.
-  carmelopaz0708@gmail.com
-*/
-
 // TODO: Include library headers like random.h
 
 const int led1 = 2;
@@ -17,6 +10,7 @@ const int led7 = 8;
 const int led8 = 9;
 const int led9 = 10;
 
+// Revise variable names to sw_all etc.
 const int sw_triggerAll = A0;
 const int sw_triggerUp = A1;
 const int sw_triggerDown = A2;
@@ -24,10 +18,14 @@ const int sw_triggerRandom = A3;
 
 bool switchLastState = LOW;
 bool switchCurrentState = LOW;
+bool reset = false;
+
+unsigned long lastDebounceTime = 0;
+unsigned long debounceDelay = 50;
 
 void setup() 
 {
-	for (int i = 2; i < 10; i++)
+	for (int i = 2; i <= 10; i++)
 	{
 		pinMode(i, OUTPUT);
 	}
@@ -39,26 +37,30 @@ void setup()
 
 bool debounce(int swPos)
 {
-	bool switchCurrentState = digitalRead(swPos);
+	switchCurrentState = digitalRead(swPos);
 	if (switchLastState != switchCurrentState) 
 	{
-		delay(50);
+		delay(100);
 		switchCurrentState = digitalRead(swPos);
 	}
-	return switchCurrentState;
+
+	if (switchCurrentState == HIGH)
+	{
+		return true;
+	}
 }
 
-void all() 
+bool all(bool trigger) 
 {
-	static bool ledOn = false;
-	if (switchLastState == LOW && switchCurrentState == HIGH)		// Condition that triggers event
+	if (trigger)		// Condition that triggers event
 	{
-		ledOn = !ledOn;
-		for (int i = 2; i < 10; i++) 
+		for (int i = 2; i <= 10; i++) 
 		{
-			digitalWrite(i, ledOn);
+			digitalWrite(i, HIGH);
 		}
+		delay(100);
 	}
+	return false;
 }
 
 void decrement() 
@@ -76,11 +78,19 @@ void randomizer()
 	// TODO
 }
 
+void resetLED()
+{
+	for (int i = 2; i <= 10; i++)
+	{
+		digitalWrite(i, LOW);
+	}
+}
+
 void loop() 
 {
-	if (digitalRead(sw_triggerAll) == HIGH) 
+	if (digitalRead(sw_triggerAll) == HIGH && reset == false) 
 	{
-		switchCurrentState = debounce(sw_triggerAll);
-		all();
+		bool led_All = debounce(sw_triggerAll);
+		reset = all(led_All);
 	}
 }
