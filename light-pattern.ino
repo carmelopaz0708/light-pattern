@@ -11,17 +11,13 @@ const int led8 = 9;
 const int led9 = 10;
 
 // Revise variable names to sw_all etc.
-const int sw_triggerAll = A0;
-const int sw_triggerUp = A1;
-const int sw_triggerDown = A2;
-const int sw_triggerRandom = A3;
+const int sw1 = A0;
+const int sw2 = A1;
+const int sw3 = A2;
+const int sw4 = A3;
 
-bool switchLastState = LOW;
-bool switchCurrentState = LOW;
-bool reset = false;
-
-unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;
+unsigned long sw_dbTime = 0;
+unsigned long db_delay = 100;
 
 void setup() 
 {
@@ -35,62 +31,53 @@ void setup()
 	pinMode(A3, INPUT);
 }
 
-bool debounce(int swPos)
+bool debounce(bool reading)
 {
-	switchCurrentState = digitalRead(swPos);
-	if (switchLastState != switchCurrentState) 
-	{
-		delay(100);
-		switchCurrentState = digitalRead(swPos);
-	}
+	sw_dbTime = millis();
 
-	if (switchCurrentState == HIGH)
+	if ((millis() - sw_dbTime) > db_delay)
 	{
-		return true;
-	}
-}
-
-bool all(bool trigger) 
-{
-	if (trigger)		// Condition that triggers event
-	{
-		for (int i = 2; i <= 10; i++) 
+		if (reading == true)
 		{
-			digitalWrite(i, HIGH);
+			return true;
 		}
-		delay(100);
 	}
-	return false;
 }
 
-void decrement() 
+void testFN1(bool on) 
 {
-	// TODO
+	// Make led1 ~ led4 light up
+	digitalWrite(led1, on);
+	digitalWrite(led2, on);
+	digitalWrite(led3, on);
+	digitalWrite(led4, on);
 }
 
-void increment() 
+void testFN2(bool on)
 {
-	// TODO
-}
-
-void randomizer() 
-{
-	// TODO
-}
-
-void resetLED()
-{
-	for (int i = 2; i <= 10; i++)
-	{
-		digitalWrite(i, LOW);
-	}
+	// Make led5 ~ led9 light up
+	digitalWrite(led5, on);
+	digitalWrite(led6, on);
+	digitalWrite(led7, on);
+	digitalWrite(led8, on);
+	digitalWrite(led9, on);
 }
 
 void loop() 
 {
-	if (digitalRead(sw_triggerAll) == HIGH && reset == false) 
+	bool activate_sw1 = false;
+
+	bool read_sw1 = digitalRead(sw1);
+
+	// Listen for button presses
+	if (read_sw1 != false)
 	{
-		bool led_All = debounce(sw_triggerAll);
-		reset = all(led_All);
+		activate_sw1 = debounce(read_sw1);
+	}
+
+	// Activate pattern on button press
+	if (activate_sw1 == true)
+	{
+		testFN1(activate_sw1);
 	}
 }
