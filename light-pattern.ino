@@ -1,83 +1,44 @@
-// TODO: Include library headers like random.h
+#include "helper.h"
 
-const int led1 = 2;
-const int led2 = 3;
-const int led3 = 4;
-const int led4 = 5;
-const int led5 = 6;
-const int led6 = 7;
-const int led7 = 8;
-const int led8 = 9;
-const int led9 = 10;
-
-// Revise variable names to sw_all etc.
-const int sw1 = A0;
-const int sw2 = A1;
-const int sw3 = A2;
-const int sw4 = A3;
+Button sw1(A0);
+Button sw2(A1);
+Button sw3(A2);
+Button sw4(A4);
 
 unsigned long sw_dbTime = 0;
 unsigned long db_delay = 100;
+const int LED_COUNT = 9;
+
+struct Led
+{
+    int pins[LED_COUNT] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
+    bool m_f_all = false;
+    bool m_f_dec = false;
+    bool m_f_inc = false;
+    bool m_f_ran = false;
+    void activateAll();
+    void activateDecrement();
+    void activateIncrement();
+    void activateRandom();
+} leds;
 
 void setup() 
 {
-	for (int i = 2; i <= 10; i++)
+	for (int i = 0; i < sizeof(leds.pins); i++)
 	{
-		pinMode(i, OUTPUT);
+		pinMode(leds.pins[i], OUTPUT);
 	}
-	pinMode(A0, INPUT);
-	pinMode(A1, INPUT);
-	pinMode(A2, INPUT);
-	pinMode(A3, INPUT);
-}
-
-bool debounce(bool reading)
-{
-	sw_dbTime = millis();
-
-	if ((millis() - sw_dbTime) > db_delay)
-	{
-		if (reading == true)
-		{
-			return true;
-		}
-	}
-}
-
-void testFN1(bool on) 
-{
-	// Make led1 ~ led4 light up
-	digitalWrite(led1, on);
-	digitalWrite(led2, on);
-	digitalWrite(led3, on);
-	digitalWrite(led4, on);
-}
-
-void testFN2(bool on)
-{
-	// Make led5 ~ led9 light up
-	digitalWrite(led5, on);
-	digitalWrite(led6, on);
-	digitalWrite(led7, on);
-	digitalWrite(led8, on);
-	digitalWrite(led9, on);
 }
 
 void loop() 
 {
-	bool activate_sw1 = false;
-
-	bool read_sw1 = digitalRead(sw1);
-
-	// Listen for button presses
-	if (read_sw1 != false)
+	// Test function. Can be deleted
+	if (digitalRead(sw1.m_pin) == HIGH)
 	{
-		activate_sw1 = debounce(read_sw1);
-	}
-
-	// Activate pattern on button press
-	if (activate_sw1 == true)
-	{
-		testFN1(activate_sw1);
+		for (int i = 0; i < LED_COUNT; i++)
+		{
+			digitalWrite(leds.pins[i], HIGH);
+			delay(500);
+		}
 	}
 }
