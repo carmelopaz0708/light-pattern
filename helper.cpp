@@ -9,8 +9,19 @@ Button::Button(int pin)
     m_pin = pin;
 }
 
-bool Button::debounce(bool reading)
+void Button::readAndDebounce()                 // Work in progress. Won't trigger
 {
-    digitalRead(m_pin);              // Unfinished. Must tact on
-}
+    bool pos_edge;
+    unsigned long db_time;
 
+    bool reading = digitalRead(m_pin);
+    if (reading == true) db_time = millis();
+    
+    if ((millis() - db_time) > db_delay)
+    {
+        if (reading == true) pos_edge = true;
+    }
+
+    if (pos_edge == true) m_pressed = true;
+    else m_pressed = false;
+}

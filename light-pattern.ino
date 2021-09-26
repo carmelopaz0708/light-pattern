@@ -7,26 +7,32 @@ const int SW_COUNT = 4;
 int led[LED_COUNT] = {2, 3, 4, 5, 6, 7, 8, 9, 10};
 
 const unsigned long db_delay = 50;
-bool pos_edge = HIGH;
+bool buttonState;
+bool lastButtonState = LOW;
 
 struct Button 
 {
 	int m_pin;
 	bool m_pressed;
 
+	// Function won't retain the last value
 	bool readAndDebounce(int pin)
 	{
 		unsigned long db_time;
 
 		int reading = digitalRead(pin);
-		if (reading == pos_edge)
+		if (reading != lastButtonState)
 		{
 			db_time = millis();
 		}
 
 		if ((millis() - db_time) > db_delay)
 		{
-			if (reading == pos_edge)
+			if (reading != buttonState)
+			{
+				buttonState = reading;
+			}
+			if (buttonState == true)
 			{
 				return true;
 			} else return false;
@@ -58,9 +64,9 @@ void setup()
 void loop() 
 {
 	// For testing
-	bool triggered = digitalRead(sw1.m_pin);
+	sw1.m_pressed = digitalRead(sw1.m_pin);
 	
-	if (triggered == HIGH)
+	if (sw1.m_pressed == true)
 	{
 		Serial.println(1);
 	} else Serial.println(0);
