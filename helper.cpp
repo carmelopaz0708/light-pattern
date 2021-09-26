@@ -1,27 +1,37 @@
-// Implementation program
+/*
+    Implementation file
+*/
 
-#include <Arduino.h>
+#include "Arduino.h"
 #include "helper.h"
 
 Button::Button(int pin)
 {
-    pinMode(pin, INPUT);
     m_pin = pin;
+    pinMode(m_pin, INPUT);
 }
 
-void Button::readAndDebounce()                 // Work in progress. Won't trigger
+Led::Led(uint8_t *pins)
 {
-    bool pos_edge;
-    unsigned long db_time;
-
-    bool reading = digitalRead(m_pin);
-    if (reading == true) db_time = millis();
-    
-    if ((millis() - db_time) > db_delay)
+    for (uint8_t i = 0; i < LED_COUNT; i++)
     {
-        if (reading == true) pos_edge = true;
+        m_pins[i] = pins[i];
+        pinMode(m_pins[i], OUTPUT);   
     }
+}
 
-    if (pos_edge == true) m_pressed = true;
-    else m_pressed = false;
+// Test function for switch
+void Button::read()
+{
+    Serial.println(m_pin);
+    delay(500);
+}
+
+// Test function for led
+void Led::test()
+{
+    for (int i = 0; i < LED_COUNT; i++)
+    {
+        digitalWrite(m_pins[i], HIGH);
+    }
 }
