@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include "helper.h"
 
-Button::Button(int pin)
+Button::Button(uint8_t pin)
 {
     m_pin = pin;
     pinMode(m_pin, INPUT);
@@ -21,7 +21,7 @@ Led::Led(uint8_t *pins)
 }
 
 // Test function for switch
-void Button::read()
+void Button::test()
 {
     Serial.println(m_pin);
     delay(500);
