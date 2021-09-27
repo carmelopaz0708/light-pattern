@@ -14,12 +14,16 @@ Led leds(led_pins);
 
 void setup()
 {
-    Serial.begin(9600);
-    Serial.flush();
+    // Begin tests here
+    // Serial.begin(9600);
+    // Serial.flush();
+    // End tests here
 }
 
 void loop()
 {
-    leds.test();
-    sw1.read();
+    // Begin tests here
+    // leds.test();
+    // sw1.read();
+    // End tests here
 }
