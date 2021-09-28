@@ -9,6 +9,30 @@ Button::Button(uint8_t pin)
 {
     m_pin = pin;
     pinMode(m_pin, INPUT);
+    m_pressed = false;
+}
+
+void Button::read()
+{
+    unsigned long db_time = millis();
+    bool reading = digitalRead(m_pin);
+    if (reading == true)
+    {
+        bool pressed = Button::debounce(db_time);
+        if (pressed == true)
+        {
+            m_pressed = true;
+        }
+    }
+}
+
+bool Button::debounce(unsigned long t_previous)
+{
+    unsigned long t_current = millis();
+    if ((t_current - t_previous) > DB_DELAY)
+    {
+        return true;
+    }
 }
 
 Led::Led(uint8_t *pins)
