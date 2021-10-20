@@ -48,6 +48,15 @@ Led::Led(uint8_t *pins)
     }
 }
 
+// Lights up all the leds
+void Led::activateAll()
+{
+    for (int i = 0; i < LED_COUNT; i++)
+    {
+        digitalWrite(m_pins[i], HIGH);
+    }
+}
+
 // Button test function. Prints pin number to serial output
 void Button::test()
 {
