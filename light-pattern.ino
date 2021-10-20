@@ -25,19 +25,16 @@ void loop()
     if (sw1.m_pressed)
     {
         sw1.m_pressed = !sw1.m_pressed;
-        leds.reset();
         leds.activateAll();
     } 
     if (sw2.m_pressed)
     {
         sw2.m_pressed = !sw2.m_pressed;
-        leds.reset();
         leds.activateDown();
     }
     if (sw3.m_pressed)
     {
         sw3.m_pressed = !sw3.m_pressed;
-        leds.reset();
         leds.activateUp();
     }
 }

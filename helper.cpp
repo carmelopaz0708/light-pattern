@@ -60,6 +60,7 @@ void Led::reset()
 // Testing
 void Led::activateAll()
 {
+    reset();
     for (int i = 0; i < LED_COUNT; i = i + 2)
     {
         digitalWrite(m_pins[i], HIGH);
@@ -68,6 +69,7 @@ void Led::activateAll()
 
 void Led::activateDown()
 {
+    reset();
     for (int i = 1; i < LED_COUNT; i = i + 2)
     {
         digitalWrite(m_pins[i], HIGH);
@@ -76,6 +78,7 @@ void Led::activateDown()
 
 void Led::activateUp()
 {
+    reset();
     for (int i = 0; i < LED_COUNT; i++)
     {
         digitalWrite(m_pins[i], HIGH);
