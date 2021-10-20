@@ -16,14 +16,26 @@ Led leds(led_pins);
 
 void setup()
 {
+    // TODO
+    // - Update eschema to use Arduino Nano
+    // - Test new schematic using internal pullup. This may get rid of spurious input and interference
+    // - Rewire one switch to use the revised schematic
+
     // Begin tests here
-    Serial.begin(9600);
-    Serial.flush();
+    // Serial.begin(9600);
+    // Serial.flush();
     // End tests here
 }
 
 void loop()
 {
+    sw1.read();
+    if (sw1.m_pressed == true)
+    {
+        leds.activateAll();
+        // m_pin must be set to 0 after leds activate
+    }
+
     // Begin tests here
     // sw1.test();
     // leds.test();
