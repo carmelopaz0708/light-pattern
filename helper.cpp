@@ -5,6 +5,7 @@
 #include "Arduino.h"
 #include "helper.h"
 
+// Constructor. Initializes the button pins
 Button::Button(uint8_t pin)
 {
     m_pin = pin;
@@ -12,6 +13,7 @@ Button::Button(uint8_t pin)
     m_pressed = false;
 }
 
+// Detects a button press on the switch
 void Button::read()
 {
     unsigned long db_time = millis();
@@ -26,6 +28,7 @@ void Button::read()
     }
 }
 
+// Function called from Button::read(). Eliminates spurious readings from switches.
 bool Button::debounce(unsigned long t_previous)
 {
     unsigned long t_current = millis();
@@ -35,6 +38,7 @@ bool Button::debounce(unsigned long t_previous)
     }
 }
 
+// Constructor. Initializes the LED pins
 Led::Led(uint8_t *pins)
 {
     for (uint8_t i = 0; i < LED_COUNT; i++)
@@ -44,14 +48,14 @@ Led::Led(uint8_t *pins)
     }
 }
 
-// Test function for switch
+// Button test function. Prints pin number to serial output
 void Button::test()
 {
     Serial.println(m_pin);
     delay(500);
 }
 
-// Test function for led
+// LED test function. Lights all LEDs in the circuit.
 void Led::test()
 {
     for (int i = 0; i < LED_COUNT; i++)
