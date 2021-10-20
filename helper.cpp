@@ -9,7 +9,7 @@
 Button::Button(uint8_t pin)
 {
     m_pin = pin;
-    pinMode(m_pin, INPUT);
+    pinMode(m_pin, INPUT_PULLUP);
     m_pressed = false;
 }
 
