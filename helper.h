@@ -24,9 +24,9 @@ class Led
     bool m_on_up;
     bool m_on_down;
     bool m_on_rand;
+    void reset();
 public:
     Led(uint8_t *pins);
-    void reset();
     void activateAll();
     void activateUp();
     void activateDown();
