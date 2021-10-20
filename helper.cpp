@@ -5,12 +5,22 @@
 #include "Arduino.h"
 #include "helper.h"
 
-// Constructor. Initializes the button pins
+// Initializes the button pins
 Button::Button(uint8_t pin)
 {
     m_pin = pin;
     pinMode(m_pin, INPUT_PULLUP);
     m_pressed = false;
+}
+
+// Initializes the LED pins
+Led::Led(uint8_t *pins)
+{
+    for (uint8_t i = 0; i < LED_COUNT; i++)
+    {
+        m_pins[i] = pins[i];
+        pinMode(m_pins[i], OUTPUT);   
+    }
 }
 
 // Detects a button press on the switch
@@ -21,7 +31,7 @@ void Button::read()
     if (reading == true)
     {
         bool pressed = Button::debounce(db_time);
-        if (pressed == true)
+        if (pressed)
         {
             m_pressed = true;
         }
@@ -38,34 +48,33 @@ bool Button::debounce(unsigned long t_previous)
     }
 }
 
-// Constructor. Initializes the LED pins
-Led::Led(uint8_t *pins)
+// Sets all leds to low
+void Led::reset()
 {
-    for (uint8_t i = 0; i < LED_COUNT; i++)
+    for (int i = 0; i < LED_COUNT; i++)
     {
-        m_pins[i] = pins[i];
-        pinMode(m_pins[i], OUTPUT);   
+        digitalWrite(m_pins[i], LOW);
     }
 }
 
-// Lights up all the leds
+// Testing
 void Led::activateAll()
 {
-    for (int i = 0; i < LED_COUNT; i++)
+    for (int i = 0; i < LED_COUNT; i = i + 2)
     {
         digitalWrite(m_pins[i], HIGH);
     }
 }
 
-// Button test function. Prints pin number to serial output
-void Button::test()
+void Led::activateDown()
 {
-    Serial.println(m_pin);
-    delay(500);
+    for (int i = 1; i < LED_COUNT; i = i + 2)
+    {
+        digitalWrite(m_pins[i], HIGH);
+    }
 }
 
-// LED test function. Lights all LEDs in the circuit.
-void Led::test()
+void Led::activateUp()
 {
     for (int i = 0; i < LED_COUNT; i++)
     {
