@@ -24,8 +24,8 @@ class Led
 public:
     Led(uint8_t *pins);
     void activateAll();
-    void activateUp();
     void activateDown();
+    void activateUp();
     void activateRandom();
 };
 
