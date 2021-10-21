@@ -23,14 +23,17 @@ Led::Led(uint8_t *pins)
     }
 }
 
-// Detects a button press on the switch
+// Reads and debounce button
 void Button::read()
 {
-    unsigned long db_time = millis();
+    bool pressed = false;
     bool reading = digitalRead(m_pin);
     if (reading == true)
     {
-        bool pressed = Button::debounce(db_time);
+        if (millis() >= DB_DELAY)
+        {
+            pressed = true;
+        }
         if (pressed)
         {
             m_pressed = true;
@@ -38,17 +41,7 @@ void Button::read()
     }
 }
 
-// Function called from Button::read(). Eliminates spurious readings from switches.
-bool Button::debounce(unsigned long t_previous)
-{
-    unsigned long t_current = millis();
-    if ((t_current - t_previous) > DB_DELAY)
-    {
-        return true;
-    }
-}
-
-// Sets all leds to low
+// Reset led state
 void Led::reset()
 {
     for (int i = 0; i < LED_COUNT; i++)
@@ -57,11 +50,11 @@ void Led::reset()
     }
 }
 
-// Testing
+// Sets all leds to high
 void Led::activateAll()
 {
     reset();
-    for (int i = 0; i < LED_COUNT; i = i + 2)
+    for (int i = 0; i < LED_COUNT; i++)
     {
         digitalWrite(m_pins[i], HIGH);
     }
@@ -69,18 +62,27 @@ void Led::activateAll()
 
 void Led::activateDown()
 {
+    // TODO: Modify code from Led::activateUp()
     reset();
-    for (int i = 1; i < LED_COUNT; i = i + 2)
-    {
-        digitalWrite(m_pins[i], HIGH);
-    }
 }
 
 void Led::activateUp()
 {
+    // FIXME: Let function exit when a different button is pressed
     reset();
-    for (int i = 0; i < LED_COUNT; i++)
+
+    int i = 0;
+    unsigned long startCount = 0;
+
+    while (i < LED_COUNT)
     {
-        digitalWrite(m_pins[i], HIGH);
+        unsigned long endCount = millis();
+        if ((endCount - startCount) >= interval)
+        {
+            startCount = endCount;
+            digitalWrite(m_pins[i], HIGH);
+            digitalWrite(m_pins[i - 1], LOW);
+            i++;
+        }
     }
 }
