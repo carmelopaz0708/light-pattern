@@ -7,35 +7,26 @@
 
 class Button
 {
-    static const unsigned long DB_DELAY = 50;
+    static const unsigned long DB_DELAY = 20;
     uint8_t m_pin;
-    bool debounce(unsigned long t_previous);
 public:
     Button(uint8_t pin);
     bool m_pressed;
     void read();
-
-    // Test function
-    void test();
 };
 
 class Led
 {
     static const int LED_COUNT = 9;
     uint8_t m_pins[LED_COUNT];
-    bool m_on_all;
-    bool m_on_up;
-    bool m_on_down;
-    bool m_on_rand;
+    static const unsigned long interval = 500;
+    void reset();
 public:
     Led(uint8_t *pins);
     void activateAll();
-    void activateUp();
     void activateDown();
+    void activateUp();
     void activateRandom();
-
-    // Test function
-    void test();
 };
 
 #endif
