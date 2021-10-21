@@ -68,7 +68,7 @@ void Led::activateDown()
 
 void Led::activateUp()
 {
-    // FIXME: Let function exit when a different button is pressed
+    // FIXME: Let function exit when a different button is pressed. Perhaps inherit all button pins
     reset();
 
     int i = 0;
