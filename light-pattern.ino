@@ -22,6 +22,7 @@ void loop()
     sw2.read();
     sw3.read();
 
+    // TODO: Modify loop to allow functions to interrupt when a button is pressed
     if (sw1.m_pressed)
     {
         sw1.m_pressed = !sw1.m_pressed;
