@@ -9,8 +9,33 @@
 Button::Button(uint8_t pin)
 {
     m_pin = pin;
-    pinMode(m_pin, INPUT_PULLUP);
+    pinMode(m_pin, INPUT);
     m_pressed = false;
+}
+
+// Reads button press
+void Button::read()
+{
+    unsigned long db_time = millis();
+    bool reading = digitalRead(m_pin);
+    if (reading == true)
+    {
+        bool pressed = Button::debounce(db_time);
+        if (pressed)
+        {
+            m_pressed = true;
+        }
+    }
+}
+
+// Debounce button press
+bool Button::debounce(unsigned long t_previous)
+{
+    unsigned long t_current = millis();
+    if ((t_current - t_previous) > DB_DELAY)
+    {
+        return true;
+    }
 }
 
 // Initializes the LED pins
@@ -20,24 +45,6 @@ Led::Led(uint8_t *pins)
     {
         m_pins[i] = pins[i];
         pinMode(m_pins[i], OUTPUT);   
-    }
-}
-
-// Reads and debounce button
-void Button::read()
-{
-    bool pressed = false;
-    bool reading = digitalRead(m_pin);
-    if (reading == true)
-    {
-        if (millis() >= DB_DELAY)
-        {
-            pressed = true;
-        }
-        if (pressed)
-        {
-            m_pressed = true;
-        }
     }
 }
 
@@ -62,13 +69,15 @@ void Led::activateAll()
 
 void Led::activateDown()
 {
-    // TODO: Modify code from Led::activateUp()
     reset();
+    for (int i = 5; i < LED_COUNT; i++)
+    {
+        digitalWrite(m_pins[i], HIGH);
+    }
 }
 
 void Led::activateUp()
 {
-    // FIXME: Let function exit when a different button is pressed. Perhaps inherit all button pins
     reset();
 
     int i = 0;
