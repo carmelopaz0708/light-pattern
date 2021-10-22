@@ -105,21 +105,33 @@ void Led::activateUp()
     }
 }
 
-// TODO: WIP. Instead of random, make it wave out from the center
-void Led::activateRandom()
+// Sweeps LED light from the middle moving outward
+void Led::activateMiddle()
 {
     reset();
-    int i = 0;
+    int i = LED_COUNT / 2;
+    int n = 0;
     unsigned long startCount = 0;
-    while (i <= LED_COUNT)
+    while (n <= (i + 1))
     {
         unsigned long endCount = millis();
         if ((endCount - startCount) >= interval)
         {
             startCount = endCount;
-            int index = random(LED_COUNT);
-            digitalWrite(m_pins[index], HIGH);
-            i++;
+            if (n == 0)
+            {
+                digitalWrite(m_pins[i], HIGH);
+            } 
+            else 
+            {
+                for (int a = i - (n - 1); a < (i + (n + 1)); a++)
+                {
+                    digitalWrite(m_pins[a], LOW);
+                }
+                digitalWrite(m_pins[i - n], HIGH);
+                digitalWrite(m_pins[i + n], HIGH);
+            }
+            n++;
         }
     }
 }

@@ -27,7 +27,7 @@ public:
     void activateAll();
     void activateDown();
     void activateUp();
-    void activateRandom();
+    void activateMiddle();
 };
 
 #endif

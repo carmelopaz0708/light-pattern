@@ -14,13 +14,11 @@ Button sw3(A2);
 Button sw4(A3);
 Led leds(led_pins);
 
-void setup() 
-{
-    randomSeed(analogRead(0));
-}
+void setup() {}
 
 void loop()
 {
+    // FIXME: Prototype loop. WIP
     sw1.read();
     sw2.read();
     sw3.read();
@@ -44,6 +42,6 @@ void loop()
     if (sw4.m_pressed)
     {
         sw4.m_pressed = !sw4.m_pressed;
-        leds.activateRandom();
+        leds.activateMiddle();
     }
 }
