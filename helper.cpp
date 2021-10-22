@@ -67,23 +67,32 @@ void Led::activateAll()
     }
 }
 
+// Downward sweeping movement of LED lights
 void Led::activateDown()
 {
     reset();
-    for (int i = 5; i < LED_COUNT; i++)
+    int i = LED_COUNT;
+    unsigned long startCount = 0;
+    while (i >= 0)
     {
-        digitalWrite(m_pins[i], HIGH);
+        unsigned long endCount = millis();
+        if ((endCount - startCount) >= interval)
+        {
+            startCount = endCount;
+            digitalWrite(m_pins[i], LOW);
+            digitalWrite(m_pins[i - 1], HIGH);
+            i--;
+        }
     }
 }
 
+// Upward sweeping movement of LED lights
 void Led::activateUp()
 {
     reset();
-
     int i = 0;
     unsigned long startCount = 0;
-
-    while (i < LED_COUNT)
+    while (i <= LED_COUNT)
     {
         unsigned long endCount = millis();
         if ((endCount - startCount) >= interval)
@@ -92,6 +101,37 @@ void Led::activateUp()
             digitalWrite(m_pins[i], HIGH);
             digitalWrite(m_pins[i - 1], LOW);
             i++;
+        }
+    }
+}
+
+// Sweeps LED light from the middle moving outward
+void Led::activateMiddle()
+{
+    reset();
+    int i = LED_COUNT / 2;
+    int n = 0;
+    unsigned long startCount = 0;
+    while (n <= (i + 1))
+    {
+        unsigned long endCount = millis();
+        if ((endCount - startCount) >= interval)
+        {
+            startCount = endCount;
+            if (n == 0)
+            {
+                digitalWrite(m_pins[i], HIGH);
+            } 
+            else 
+            {
+                for (int a = i - (n - 1); a < (i + (n + 1)); a++)
+                {
+                    digitalWrite(m_pins[a], LOW);
+                }
+                digitalWrite(m_pins[i - n], HIGH);
+                digitalWrite(m_pins[i + n], HIGH);
+            }
+            n++;
         }
     }
 }

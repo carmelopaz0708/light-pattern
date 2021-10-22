@@ -18,9 +18,11 @@ void setup() {}
 
 void loop()
 {
+    // FIXME: Prototype loop. WIP
     sw1.read();
     sw2.read();
     sw3.read();
+    sw4.read();
 
     if (sw1.m_pressed)
     {
@@ -36,5 +38,10 @@ void loop()
     {
         sw3.m_pressed = !sw3.m_pressed;
         leds.activateUp();
+    }
+    if (sw4.m_pressed)
+    {
+        sw4.m_pressed = !sw4.m_pressed;
+        leds.activateMiddle();
     }
 }
