@@ -67,23 +67,32 @@ void Led::activateAll()
     }
 }
 
+// Downward sweeping movement of LED lights
 void Led::activateDown()
 {
     reset();
-    for (int i = 5; i < LED_COUNT; i++)
+    int i = LED_COUNT;
+    unsigned long startCount = 0;
+    while (i >= 0)
     {
-        digitalWrite(m_pins[i], HIGH);
+        unsigned long endCount = millis();
+        if ((endCount - startCount) >= interval)
+        {
+            startCount = endCount;
+            digitalWrite(m_pins[i], LOW);
+            digitalWrite(m_pins[i - 1], HIGH);
+            i--;
+        }
     }
 }
 
+// Upward sweeping movement of LED lights
 void Led::activateUp()
 {
     reset();
-
     int i = 0;
     unsigned long startCount = 0;
-
-    while (i < LED_COUNT)
+    while (i <= LED_COUNT)
     {
         unsigned long endCount = millis();
         if ((endCount - startCount) >= interval)
@@ -91,6 +100,25 @@ void Led::activateUp()
             startCount = endCount;
             digitalWrite(m_pins[i], HIGH);
             digitalWrite(m_pins[i - 1], LOW);
+            i++;
+        }
+    }
+}
+
+// TODO: WIP. Instead of random, make it wave out from the center
+void Led::activateRandom()
+{
+    reset();
+    int i = 0;
+    unsigned long startCount = 0;
+    while (i <= LED_COUNT)
+    {
+        unsigned long endCount = millis();
+        if ((endCount - startCount) >= interval)
+        {
+            startCount = endCount;
+            int index = random(LED_COUNT);
+            digitalWrite(m_pins[index], HIGH);
             i++;
         }
     }
