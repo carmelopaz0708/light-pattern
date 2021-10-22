@@ -20,7 +20,7 @@ class Led
 {
     static const int LED_COUNT = 9;
     uint8_t m_pins[LED_COUNT];
-    static const unsigned long interval = 500;
+    static const unsigned long interval = 125;
     void reset();
 public:
     Led(uint8_t *pins);
