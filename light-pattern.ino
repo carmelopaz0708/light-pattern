@@ -22,12 +22,6 @@ void loop()
     sw2.read();
     sw3.read();
 
-    // TODO: Modify loop to allow functions to interrupt when a button is pressed
-    // TODO: Perhaps modify the loop function to read only one input when running, and run the LED functions in a switch-case statement
-    //      - This will toggle a flag that will set to true when a switch is pressed. The toggle is a global variable shared between
-    //      - all button objects.
-    //      - Or better yet, create a separate class that detects an input, and toggle different functions in it
-
     if (sw1.m_pressed)
     {
         sw1.m_pressed = !sw1.m_pressed;
