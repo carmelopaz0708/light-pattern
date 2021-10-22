@@ -7,12 +7,13 @@
 
 class Button
 {
-    static const unsigned long DB_DELAY = 20;
+    static const unsigned long DB_DELAY = 50;
     uint8_t m_pin;
 public:
     Button(uint8_t pin);
     bool m_pressed;
     void read();
+    bool debounce(unsigned long t_previous);
 };
 
 class Led
